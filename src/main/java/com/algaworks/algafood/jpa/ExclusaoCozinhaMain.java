@@ -28,7 +28,7 @@ public class ExclusaoCozinhaMain {
 			System.out.println(cozinha.getNomeCozinha());
 		}
 		
-		cadastroCozinha.remover(coz);
+		cadastroCozinha.remover(coz.getId());
 					
 		System.out.println("Após Exclusão.");				
 		cozinhas = cadastroCozinha.listar();

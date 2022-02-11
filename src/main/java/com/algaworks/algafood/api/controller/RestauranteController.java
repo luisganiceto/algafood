@@ -19,36 +19,43 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.algaworks.algafood.domain.model.Cozinha;
-import com.algaworks.algafood.domain.repository.CozinhaRepository;
-import com.algaworks.algafood.domain.service.CadastroCozinhaService;
+import com.algaworks.algafood.domain.model.Restaurante;
+import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
 @RestController
-@RequestMapping(value = "/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CozinhaController {
+@RequestMapping(value = "/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestauranteController {
 
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
+	private RestauranteRepository restauranteRepository;
 	
 	@Autowired
-	private CadastroCozinhaService cozinhaService;
+	private CadastroRestauranteService restauranteService;
 	
 	@GetMapping
-	public List<Cozinha> listar(){
-		return cozinhaRepository.listar();
+	public List<Restaurante> listar(){
+		return restauranteRepository.listar();
 	}
 	
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Cozinha> buscar(@PathVariable Long id){
-		Cozinha cozinha = cozinhaRepository.buscar(id);
-		if (cozinha != null) {
-			return ResponseEntity.ok(cozinha);			
+	public ResponseEntity<Restaurante> buscar(@PathVariable Long id){
+		Restaurante restaurante = restauranteRepository.buscar(id);
+		if (restaurante != null) {
+			return ResponseEntity.ok(restaurante);			
 		} else {
 			return ResponseEntity.notFound().build();						
 		}
 	}
 	
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Restaurante adicionar(@RequestBody Restaurante restaurante){
+		return restauranteService.salvar(restaurante);
+	}
+
+/*	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cozinha salvar(@RequestBody Cozinha cozinha){
@@ -82,5 +89,5 @@ public class CozinhaController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
-			
+*/			
 }
