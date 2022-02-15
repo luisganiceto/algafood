@@ -12,9 +12,13 @@ import com.algaworks.algafood.domain.model.Cozinha;
 @Repository
 public interface CozinhaRepository extends JpaRepository<Cozinha, Long> {
 	
-	List<Cozinha> findByNomeCozinha(String nomeCozinha); // Busca o nome exato
+	// Busca o nome exato
+	List<Cozinha> findByNomeCozinha(String nomeCozinha); 
 	
-	List<Optional<Cozinha>> findByNomeCozinhaContaining(String nomeCozinha); // Busca pelo nome da Cozinha, onde contem os mesmo caracteres do filtro.
+	// Busca pelo nome da Cozinha, onde contem os mesmo caracteres do filtro.
+	List<Optional<Cozinha>> findByNomeCozinhaContaining(String nomeCozinha); 
 	
+	// retorna true ou false para o filtro de nome da cozinha
+	boolean existsByNomeCozinha(String nome);
 
 }
