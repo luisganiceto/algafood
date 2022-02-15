@@ -29,3 +29,11 @@ insert into forma_pagamento (descricao_forma_pagamento) values ('Dinheiro');
 
 insert into permissao (nome_permissao, descricao_permissao) values ('CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
 insert into permissao (nome_permissao, descricao_permissao) values ('EDITAR_COZINHAS', 'Permite editar cozinhas');
+
+insert into restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (1,1), (1,2), (1,3);
+insert into restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (2,1), (2,2), (2,3);
+insert into restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (3,1), (3,2);
+insert into restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (4,1), (4,2), (4,3);
+insert into restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (5,3);
+insert into restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (6,1), (6,2), (6,3);
+insert into restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (7,1), (7,2), (7,3);
