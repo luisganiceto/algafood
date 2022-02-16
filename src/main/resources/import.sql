@@ -2,14 +2,6 @@ insert into cozinha(nome_cozinha) values('Tailandesa');
 insert into cozinha(nome_cozinha) values('Brasileira');
 insert into cozinha(nome_cozinha) values('Mexicana');
 
-insert into restaurante(nome_restaurante, taxa_frete, cozinha_id) values('Thai Restaurante ', 4.99, 1);
-insert into restaurante(nome_restaurante, taxa_frete, cozinha_id) values('Restaurante Tuk ', 3.99, 1);
-insert into restaurante(nome_restaurante, taxa_frete, cozinha_id) values('Churrascaria Gaucha', 2, 2);
-insert into restaurante(nome_restaurante, taxa_frete, cozinha_id) values('Gelobel Londrina', 7, 2);
-insert into restaurante(nome_restaurante, taxa_frete, cozinha_id) values('Restaurante do Donizette', 1.99, 2);
-insert into restaurante(nome_restaurante, taxa_frete, cozinha_id) values('Zapata La Taqueria', 2, 3);
-insert into restaurante(nome_restaurante, taxa_frete, cozinha_id) values('La Santa Calle', 2, 3);
-
 insert into estado (nome_estado, sigla_estado) values ('Minas Gerais', 'MG');
 insert into estado (nome_estado, sigla_estado) values ('São Paulo', 'SP');
 insert into estado (nome_estado, sigla_estado) values ('Ceará', 'CE');
@@ -22,6 +14,15 @@ insert into cidade (nome_cidade, estado_id) values ('Campinas', 2);
 insert into cidade (nome_cidade, estado_id) values ('Fortaleza', 3);
 insert into cidade (nome_cidade, estado_id) values ('Curitiba', 4);
 insert into cidade (nome_cidade, estado_id) values ('Londrina', 4);
+insert into cidade (nome_cidade, estado_id) values ('Arapongas', 4);
+
+insert into restaurante(nome_restaurante, taxa_frete, cozinha_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values('Thai Restaurante ', 4.99, 1, '80430-110', 'Rua Alameda Júlia da Costa', '870', 'Bigorrilho', '', 6, utc_timestamp, utc_timestamp);
+insert into restaurante(nome_restaurante, taxa_frete, cozinha_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values('Restaurante Tuk ', 3.99, 1, '30310-530', 'Rua Francisco Deslandes', '689', 'Anchieta', '', 2, utc_timestamp, utc_timestamp);
+insert into restaurante(nome_restaurante, taxa_frete, cozinha_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values('Churrascaria Gaucha', 2, 2, ' 86706-430', 'Avenida Maracanã', '7300', 'Parque Industrial IV', '', 8, utc_timestamp, utc_timestamp);
+insert into restaurante(nome_restaurante, taxa_frete, cozinha_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values('Gelobel Londrina', 7, 2, '86027-750', 'Av. Theodoro Victorelli', '150', 'Carlota', '1o andar', 7, utc_timestamp, utc_timestamp);
+insert into restaurante(nome_restaurante, taxa_frete, cozinha_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values('Restaurante do Donizette', 1.99, 2, '18540-000', 'AV: Monsenhor Seckler', '306', 'Pôrto Feliz', '', 3, utc_timestamp, utc_timestamp);
+insert into restaurante(nome_restaurante, taxa_frete, cozinha_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values('Zapata La Taqueria', 2, 3, '80250-030', ' R. Brg. Franco', '2300', 'Centro', ' Loja 422 - 3º andar', 6, utc_timestamp, utc_timestamp);
+insert into restaurante(nome_restaurante, taxa_frete, cozinha_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, endereco_complemento, endereco_cidade_id, data_cadastro, data_atualizacao) values('La Santa Calle', 2, 3, '80510-070', 'R. Paula Gomes', '485', 'Centro', '', 6, utc_timestamp, utc_timestamp);
 
 insert into forma_pagamento (descricao_forma_pagamento) values ('Cartão de crédito');
 insert into forma_pagamento (descricao_forma_pagamento) values ('Cartão de débito');
