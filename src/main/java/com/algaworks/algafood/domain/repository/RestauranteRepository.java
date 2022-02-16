@@ -35,6 +35,10 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long>{
 	// soma a quanditede de Restaurante que tem de determinada Cozinha
 	int countByCozinhaId(Long cozinha);
 	
+	// @Query("from Restaurante r join r.cozinha join fetch r.formasPagamento")
+	@Query("from Restaurante r join fetch r.cozinha")
+	List<Restaurante> findAll();
+	
 	
 	
 }
