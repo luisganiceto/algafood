@@ -28,8 +28,8 @@ public class Cozinha {
 	private Long id;
 	
 	//@JsonIgnore // Não mostra no arquivo JSON
-	//@JsonProperty("titulo") // Muda o nome da propriedade
-	@Column(length = 30)
+	//@JsonProperty("titulo") // Muda o nome da propriedade no arquivo JSON
+	@Column(length = 60)
 	private String nomeCozinha;
 	
 	@JsonIgnore
