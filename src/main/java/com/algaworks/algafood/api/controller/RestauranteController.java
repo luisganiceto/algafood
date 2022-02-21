@@ -44,14 +44,9 @@ public class RestauranteController {
 	
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Restaurante> buscar(@PathVariable Long id){
-		Optional<Restaurante> restaurante = restauranteRepository.findById(id);
+	public Restaurante buscar(@PathVariable Long id){
+		return restauranteService.buscarOuFalhar(id);
 		
-		if (restaurante.isPresent()) {
-			return ResponseEntity.ok(restaurante.get());			
-		} else {
-			return ResponseEntity.notFound().build();						
-		}
 	}
 	
 	@PostMapping
@@ -65,37 +60,22 @@ public class RestauranteController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> atualizar(
+	public Restaurante atualizar(
 			@PathVariable Long id, @RequestBody Restaurante restaurante) {
-		try {
-			Optional<Restaurante> restauranteAtual = restauranteRepository.findById(id);
+		Restaurante restauranteAtual = restauranteService.buscarOuFalhar(id);
 			
-			if (restauranteAtual.isPresent()) {
-				BeanUtils.copyProperties(restaurante, restauranteAtual.get(), 
+		BeanUtils.copyProperties(restaurante, restauranteAtual, 
 						"id", "formasPagamento", "endereco", "dataCadastro", "dataAtualizacao", "produtos");
-
-				Restaurante restauranteSalvo = restauranteService.salvar(restauranteAtual.get());
-				return ResponseEntity.ok(restauranteSalvo);
-			} 
-			
-			return ResponseEntity.notFound().build();
-			
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+		return restauranteService.salvar(restauranteAtual);
 	}
 	
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<?> atualizarParcial(
+	public Restaurante atualizarParcial(
 			@PathVariable Long id, @RequestBody Map<String, Object> campos) {
-		Optional<Restaurante> restauranteAtualizado = restauranteRepository.findById(id);
+		Restaurante restauranteAtualizado = restauranteService.buscarOuFalhar(id);
 		
-		if (restauranteAtualizado.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		merge(campos, restauranteAtualizado.get());
-		return atualizar(id, restauranteAtualizado.get());
+		merge(campos, restauranteAtualizado);
+		return atualizar(id, restauranteAtualizado);
 
 	}
 	

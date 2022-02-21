@@ -15,21 +15,29 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 @Service
 public class CadastroRestauranteService {
 
+	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removido, pois esta em uso com outra cidade.";
+	private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Não existe um cadastro de Restaurante com o código %d ";
+	
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
+		
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
+	private CadastroCozinhaService cozinhaService;
 	
 	public Restaurante salvar(Restaurante restaurante) {
-		Cozinha cozinha = cozinhaRepository.findById(restaurante.getCozinha().getId())
-				.orElseThrow( () -> new EntidadeNaoEncontradaException(
-						String.format("Não exite cadastro de cozinha com código %d", restaurante.getCozinha().getId())) );
+		Cozinha cozinha = cozinhaService.buscarOuFalhar(restaurante.getCozinha().getId());
 		
 		restaurante.setCozinha(cozinha);
  		
 		return restauranteRepository.save(restaurante);
 	}
+	
+	public Restaurante buscarOuFalhar(Long id) {
+		return restauranteRepository.findById(id)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, id)));
+	}
+	
 /*	
 	public void excluir(Long id) {
 		try {
