@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
@@ -50,12 +52,12 @@ public class RestauranteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante){
+	@ResponseStatus(HttpStatus.CREATED)
+	public Restaurante adicionar(@RequestBody Restaurante restaurante){
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(
-					restauranteService.salvar(restaurante));
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+			return restauranteService.salvar(restaurante);
+		} catch (CozinhaNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
 		}
 	}
 	
@@ -66,7 +68,12 @@ public class RestauranteController {
 			
 		BeanUtils.copyProperties(restaurante, restauranteAtual, 
 						"id", "formasPagamento", "endereco", "dataCadastro", "dataAtualizacao", "produtos");
-		return restauranteService.salvar(restauranteAtual);
+		try {
+			return restauranteService.salvar(restauranteAtual);
+		} catch (CozinhaNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
+		
 	}
 	
 	@PatchMapping(value = "/{id}")
@@ -75,8 +82,11 @@ public class RestauranteController {
 		Restaurante restauranteAtualizado = restauranteService.buscarOuFalhar(id);
 		
 		merge(campos, restauranteAtualizado);
-		return atualizar(id, restauranteAtualizado);
-
+		try {
+			return atualizar(id, restauranteAtualizado);
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}	
 	}
 	
 	private void merge(Map<String, Object> camposOrigem, Restaurante restauranteDestino) {
