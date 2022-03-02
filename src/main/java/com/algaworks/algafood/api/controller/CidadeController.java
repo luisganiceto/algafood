@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.Groups;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cidade;
@@ -43,7 +45,7 @@ public class CidadeController {
 		
 		@PostMapping
 		@ResponseStatus(HttpStatus.CREATED)
-		public Cidade salvar(@RequestBody Cidade cidade) {
+		public Cidade salvar(@RequestBody @Validated(Groups.CadastroCidade.class) Cidade cidade) {
 			try {
 				return cidadeService.salvar(cidade);
 			} catch (EstadoNaoEncontradaException e) {
@@ -52,7 +54,7 @@ public class CidadeController {
 		}
 		
 		@PutMapping(value = "/{id}")
-		public Cidade atualizar(@PathVariable Long id, @RequestBody Cidade cidade){
+		public Cidade atualizar(@PathVariable Long id, @RequestBody @Validated(Groups.CadastroCidade.class) Cidade cidade){
 			Cidade cidadeAtualizado = cidadeService.buscarOuFalhar(id);
 
 			BeanUtils.copyProperties(cidade, cidadeAtualizado, "id"); 

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.Groups;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -60,7 +62,7 @@ public class RestauranteController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante){
+	public Restaurante adicionar(@RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante){
 		try {
 			return restauranteService.salvar(restaurante);
 		} catch (CozinhaNaoEncontradaException e) {
@@ -70,7 +72,7 @@ public class RestauranteController {
 	
 	@PutMapping(value = "/{id}")
 	public Restaurante atualizar(
-			@PathVariable Long id, @RequestBody Restaurante restaurante) {
+			@PathVariable Long id, @RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante) {
 		Restaurante restauranteAtual = restauranteService.buscarOuFalhar(id);
 			
 		BeanUtils.copyProperties(restaurante, restauranteAtual, 
@@ -85,7 +87,7 @@ public class RestauranteController {
 	
 	@PatchMapping(value = "/{id}")
 	public Restaurante atualizarParcial(
-			@PathVariable Long id, @RequestBody Map<String, Object> campos, HttpServletRequest request) {
+			@PathVariable Long id, @RequestBody @Validated(Groups.CadastroRestaurante.class) Map<String, Object> campos, HttpServletRequest request) {
 		Restaurante restauranteAtualizado = restauranteService.buscarOuFalhar(id);
 		
 		merge(campos, restauranteAtualizado, request);

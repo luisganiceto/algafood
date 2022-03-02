@@ -8,9 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.swing.GroupLayout.Group;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.algaworks.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -24,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cozinha {
 
-	@NotNull(groups = )
+	@NotNull(groups = Groups.CadastroRestaurante.class )
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Cozinha {
 	
 	//@JsonIgnore // Não mostra no arquivo JSON
 	//@JsonProperty("titulo") // Muda o nome da propriedade no arquivo JSON
-	@NotBlank
+	@NotBlank(groups = Groups.CadastroCozinha.class)
 	@Column(length = 60)
 	private String nomeCozinha;
 	
