@@ -20,12 +20,12 @@ public class Problem {
 	private String detail;
 	private String userMessage; 
 	private LocalDateTime timestamp;
-	private List<Field> fields;
+	private List<Object> objects;
 	
 	
 	@Builder
 	@Getter
-	public static class Field{
+	public static class Object{
 		private String nome;
 		private String userMessage;
 	}

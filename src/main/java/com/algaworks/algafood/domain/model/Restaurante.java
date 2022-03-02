@@ -17,7 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -25,12 +24,16 @@ import javax.validation.constraints.PositiveOrZero;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.algaworks.algafood.Groups;
+import com.algaworks.algafood.core.validation.Groups;
+import com.algaworks.algafood.core.validation.Multiplo;
+import com.algaworks.algafood.core.validation.TaxaFrete;
+import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nomeRestaurante", descricaoObrigatoria = "Frete Grátis", groups = Groups.CadastroRestaurante.class )
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -45,8 +48,9 @@ public class Restaurante {
 	@Column(nullable = false)
 	private String nomeRestaurante;
 	
-	@NotNull
+	@TaxaFrete(groups = Groups.CadastroRestaurante.class )
 	@PositiveOrZero(groups = Groups.CadastroRestaurante.class )
+	@Multiplo(numero = 5, groups = Groups.CadastroRestaurante.class )
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	

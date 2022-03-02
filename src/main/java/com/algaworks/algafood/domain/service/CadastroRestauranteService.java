@@ -11,7 +11,7 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 @Service
 public class CadastroRestauranteService {
 
-	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removido, pois esta em uso com outra cidade.";
+//	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removido, pois esta em uso com outra cidade.";
 	
 	@Autowired
 	private RestauranteRepository restauranteRepository;
