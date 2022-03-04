@@ -50,7 +50,7 @@ public class Restaurante {
 	
 	@TaxaFrete(groups = Groups.CadastroRestaurante.class )
 	@PositiveOrZero(groups = Groups.CadastroRestaurante.class )
-	@Multiplo(numero = 5, groups = Groups.CadastroRestaurante.class )
+	//@Multiplo(numero = 5, groups = Groups.CadastroRestaurante.class )
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	
