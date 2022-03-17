@@ -9,8 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
 
 import com.algaworks.algafood.core.validation.Groups;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,12 +27,13 @@ public class Cidade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(groups = Groups.CadastroCidade.class)
+	@NotBlank
 	@Column(nullable = false)
 	private String nomeCidade;
 	
 	@Valid
-	@NotNull(groups = Groups.CadastroCidade.class)
+	@ConvertGroup(to = Default.class, from = Groups.EstadoId.class)
+	@NotNull
 	@ManyToOne
 	private Estado estado;
 		

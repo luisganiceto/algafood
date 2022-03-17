@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.algafood.core.validation.Groups;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -59,7 +58,7 @@ public class RestauranteController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Restaurante adicionar(@RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante){
+	public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante){
 		try {
 			return restauranteService.salvar(restaurante);
 		} catch (CozinhaNaoEncontradaException e) {
@@ -69,7 +68,7 @@ public class RestauranteController {
 	
 	@PutMapping(value = "/{id}")
 	public Restaurante atualizar(
-			@PathVariable Long id, @RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante) {
+			@PathVariable Long id, @RequestBody @Valid Restaurante restaurante) {
 		Restaurante restauranteAtual = restauranteService.buscarOuFalhar(id);
 			
 		BeanUtils.copyProperties(restaurante, restauranteAtual, 
@@ -84,7 +83,7 @@ public class RestauranteController {
 	
 	@PatchMapping(value = "/{id}")
 	public Restaurante atualizarParcial(
-			@PathVariable Long id, @RequestBody @Validated(Groups.CadastroRestaurante.class) Map<String, Object> campos, HttpServletRequest request) {
+			@PathVariable Long id, @RequestBody @Valid Map<String, Object> campos, HttpServletRequest request) {
 		Restaurante restauranteAtualizado = restauranteService.buscarOuFalhar(id);
 		
 		merge(campos, restauranteAtualizado, request);

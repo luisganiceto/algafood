@@ -19,17 +19,17 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Estado {
 
-	@NotNull(groups = Groups.CadastroCidade.class)
+	@NotNull(groups = Groups.EstadoId.class)
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(groups = Groups.CadastroEstado.class)
+	@NotBlank
 	@Column(nullable = false)
 	private String nomeEstado;
 	
-	@NotBlank(groups = Groups.CadastroEstado.class)
+	@NotBlank
 	@Column(nullable = false)
 	private String siglaEstado;
 	

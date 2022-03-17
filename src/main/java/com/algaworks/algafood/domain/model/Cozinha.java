@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cozinha {
 
-	@NotNull(groups = Groups.CadastroRestaurante.class )
+	@NotNull(groups = Groups.CozinhaId.class )
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Cozinha {
 	
 	//@JsonIgnore // Não mostra no arquivo JSON
 	//@JsonProperty("titulo") // Muda o nome da propriedade no arquivo JSON
-	@NotBlank(groups = Groups.CadastroCozinha.class)
+	@NotBlank
 	@Column(length = 60)
 	private String nomeCozinha;
 	
