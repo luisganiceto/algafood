@@ -1,5 +1,7 @@
 package com.algaworks.algafood;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+
 import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.algaworks.algafood.domain.model.Cozinha;
+import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.util.DatabaseCleaner;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -23,7 +29,10 @@ class CadastroCozinhaIT {
 	private int port;
 	
 	@Autowired
-	private Flyway flyway;
+	private DatabaseCleaner databaseCleaner;
+	
+	@Autowired
+	private CozinhaRepository cozinhaRepository;
 
 	@BeforeEach
 	public void setUp() {
@@ -31,8 +40,8 @@ class CadastroCozinhaIT {
 		RestAssured.port = port;
 		RestAssured.basePath = "/cozinhas";
 		
-		flyway.migrate();
-		
+		databaseCleaner.clearTables();
+		prepararDados();
 	}
 	
 	@Test
@@ -47,14 +56,14 @@ class CadastroCozinhaIT {
 	}
 	
 	@Test
-	public void deveConterQuatroCozinhas_QuandosConsultarCozinhas() {
+	public void deveConterDuasCozinhas_QuandosConsultarCozinhas() {
 		
 		RestAssured.given()
 			.accept(ContentType.JSON)
 		.when()
 			.get()
 		.then()
-			.body("", Matchers.hasSize(4));
+			.body("", Matchers.hasSize(2));
 	}
 	
 	@Test
@@ -68,6 +77,42 @@ class CadastroCozinhaIT {
 			.post()
 		.then()
 			.statusCode(201);
+	}
+	
+	@Test
+	public void deveRetornarRespostarEStatusCorretos_QuandoConsultarCozinhaExistente() {
+		
+		RestAssured.given()
+			.pathParam("cozinhaId", 2)
+			.accept(ContentType.JSON)
+		.when()
+			.get("/{cozinhaId}")
+		.then()
+			.statusCode(200)
+			.body("nomeCozinha", equalTo("Americana"));
+	}
+	
+	@Test
+	public void deveRetornarCodigoNotFound_QuandoConsultarCozinhaNaoExistente() {
+		
+		RestAssured.given()
+			.pathParam("cozinhaId", 200)
+			.accept(ContentType.JSON)
+		.when()
+			.get("/{cozinhaId}")
+		.then()
+			.statusCode(404);
+	}
+	
+	private void prepararDados() {
+		Cozinha coz1 = new Cozinha();
+		coz1.setNomeCozinha("Portuguesa");
+		cozinhaRepository.save(coz1);
+		
+		Cozinha coz2 = new Cozinha();
+		coz2.setNomeCozinha("Americana");
+		cozinhaRepository.save(coz2);
+		
 	}
 	
 }
