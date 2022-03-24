@@ -12,13 +12,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.algaworks.algafood.core.validation.Groups;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonRootName;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@JsonRootName("cozinha") // Muda o nome do List
+//@JsonRootName("cozinha") // Muda o nome do List XML
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -36,7 +34,6 @@ public class Cozinha {
 	@Column(length = 60)
 	private String nomeCozinha;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "cozinha")
 	private List<Restaurante> restaurantes;
 	
