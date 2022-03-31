@@ -1,6 +1,5 @@
 package com.algaworks.algafood.api.model.mixin;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
